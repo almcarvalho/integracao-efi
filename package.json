@@ -28,7 +28,6 @@
       "inline-css": "^3.0.0",
       "jsonwebtoken": "^8.5.1",
       "mailgun-js": "^0.22.0",
-      "mercadopago": "^1.5.13",
       "nodemon": "^2.0.14",
       "pg": "^8.7.3",
       "ts-node": "^10.4.0",
