@@ -100,15 +100,15 @@ app.post("/rota-recebimento", async (req, res) => {
             console.log(req.body.pix[0].valor);
 
 
-            if (req.body.pix[0].txid == "70dcb59b94eac9ccbm01") {
+            if (req.body.pix[0].txid == "f981333c8f364c19bf8a5c9665b32d19") {
                 valorDoPix = req.body.pix[0].valor;
                 console.log("Creditando valor do pix na máquina 2");
             }
 
-            if (req.body.pix[0].txid == "flaksdfjaskldfj") {
-                //valordoPixMaquina3 = req.body.pix[0].valor;
-                //console.log("Creditando valor do pix na máquina 3");
-            }
+            // if (req.body.pix[0].txid == "flaksdfjaskldfj") {
+            //     //valordoPixMaquina3 = req.body.pix[0].valor;
+            //     //console.log("Creditando valor do pix na máquina 3");
+            // }
 
 
         }
