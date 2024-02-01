@@ -144,7 +144,29 @@ app.post("/rota-recebimento-teste", async (req, res) => {
 });
 
 
+app.get("/gerarEstatico", async (req, res) => {
+    const Pix = require("./Pix");
+    const pix = new Pix(
+        req.body.chave,
+        req.body.descricao,
+        req.body.nomeRecebedor,
+        req.body.cidade,
+        req.body.txid,
+        req.body.valor
+    );
+
+    const payload = pix.getPayload();
+
+    console.log(payload);
+
+    return res.status(200).json(payload);
+});
+
+
+
+
+
 
 //código escrito por Lucas Carvalho em meados de Junho de 2023......
-//git push heroku main....
+//git push .
 app.listen(PORT, () => console.log(`localhost:${PORT}`)); 
