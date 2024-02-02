@@ -112,17 +112,25 @@ app.post("/rota-recebimento", async (req, res) => {
             //discord - notificações
             if (req.body.pix[0].txid == "70a8cdcb59b54eac0003") {
                 var urlDoWebhookNoDiscord = "https://discord.com/api/webhooks/1202796385293045780/5HTCCrI3TB-Zc6wkv94fe9OXjxr51Dkh6uLhN2_UGj2zxQ5OA35S6o77fFF_zwae71_t";
-                notificar(urlDoWebhookNoDiscord, req.body.pix[0].txid, req.body.pix[0].valor);
+
+                var loja = "";
+
+                if (req.body.pix[0].txid == "70a8cdcb59b54eac0003") {
+                    loja = "Frente de Caixa 01";
+                }
+                if (req.body.pix[0].txid == "70a8cdcb59b54eac0003") {
+
+                    notificar(urlDoWebhookNoDiscord, loja, req.body.pix[0].valor);
+                }
+
+
             }
-
-
+        } catch (error) {
+            console.error(error);
+            return res.status(402).json({ "error": "error: " + error });
         }
-    } catch (error) {
-        console.error(error);
-        return res.status(402).json({ "error": "error: " + error });
-    }
-    return res.status(200).json({ "ok": "ok" });
-});
+        return res.status(200).json({ "ok": "ok" });
+    });
 
 
 app.post("/rota-recebimento-teste", async (req, res) => {
