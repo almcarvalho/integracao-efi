@@ -1,6 +1,7 @@
 import cors from 'cors';
 import express from 'express';
 require('dotenv').config();
+const axios = require('axios');
 
 const PORT: string | number = process.env.PORT || 5001;
 
@@ -97,6 +98,7 @@ app.post("/rota-recebimento", async (req, res) => {
             console.log(req.body.pix[0].valor);
 
 
+            //arduino
             if (req.body.pix[0].txid == "70a8cdcb59b54eac0003") {
                 valorDoPix = req.body.pix[0].valor;
                 console.log("Creditando valor do pix na máquina 1");
@@ -106,6 +108,12 @@ app.post("/rota-recebimento", async (req, res) => {
             //     //valordoPixMaquina3 = req.body.pix[0].valor;
             //     //console.log("Creditando valor do pix na máquina 3");
             // }
+
+            //discord - notificações
+            if (req.body.pix[0].txid == "70a8cdcb59b54eac0003") {
+                var urlDoWebhookNoDiscord = "https://discord.com/api/webhooks/1202796385293045780/5HTCCrI3TB-Zc6wkv94fe9OXjxr51Dkh6uLhN2_UGj2zxQ5OA35S6o77fFF_zwae71_t";
+                notificar(urlDoWebhookNoDiscord, req.body.pix[0].txid, req.body.pix[0].valor);
+            }
 
 
         }
@@ -197,6 +205,48 @@ function numToHex(n: number, digits?: number): string {
     }
 
     return (hex.length % 2 == 0) ? hex : "0" + hex;
+}
+
+async function notificar(urlDiscordWebhook: string, txid: string, valor: string) {
+    //An array of Discord Embeds.
+    let embeds = [
+        {
+            title: "Novo Pix Recebido",
+            color: 5174599,
+            footer: {
+                text: `📅 ${new Date()}`,
+            },
+            fields: [
+                {
+                    name: "Txid" + txid,
+                    value: "Valor: " + valor
+                },
+            ],
+        },
+    ];
+
+    //Stringify the embeds using JSON.stringify()
+    let data = JSON.stringify({ embeds });
+
+    //Create a config object for axios, you can also use axios.post("url", data) instead
+    var config = {
+        method: "POST",
+        url: urlDiscordWebhook,
+        headers: { "Content-Type": "application/json" },
+        data: data,
+    };
+
+    //Send the request
+    axios(config)
+        .then((response: any) => {
+            console.log("Notificação enviada com sucesso!");
+            return response;
+        })
+        .catch((error: any) => {
+            console.log("erro ao tentar enviar notificação!");
+            console.log(error);
+            return error;
+        });
 }
 
 
