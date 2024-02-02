@@ -118,19 +118,16 @@ app.post("/rota-recebimento", async (req, res) => {
                 if (req.body.pix[0].txid == "70a8cdcb59b54eac0003") {
                     loja = "Frente de Caixa 01";
                 }
-                if (req.body.pix[0].txid == "70a8cdcb59b54eac0003") {
 
-                    notificar(urlDoWebhookNoDiscord, loja, req.body.pix[0].valor);
-                }
-
-
+                notificar(urlDoWebhookNoDiscord, loja, req.body.pix[0].valor);
             }
-        } catch (error) {
-            console.error(error);
-            return res.status(402).json({ "error": "error: " + error });
         }
-        return res.status(200).json({ "ok": "ok" });
-    });
+    } catch (error) {
+        console.error(error);
+        return res.status(402).json({ "error": "error: " + error });
+    }
+    return res.status(200).json({ "ok": "ok" });
+});
 
 
 app.post("/rota-recebimento-teste", async (req, res) => {
