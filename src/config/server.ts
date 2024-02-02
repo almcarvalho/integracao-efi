@@ -11,10 +11,11 @@ app.use(cors());
 
 app.use(express.json());
 
-
+//variável da máquina 01
 var valorDoPix = 0;
 
-var valordoPixMaquina2 = 0; //txid flaksdfjaskldfj
+//caso queira adicionar mais maquinas ...
+var valordoPixMaquina2 = 0;
 
 
 function converterPixRecebido(valorPix: number) {
@@ -54,11 +55,11 @@ app.get("/consulta-Maquina01", async (req, res) => {
     }
 });
 
-//flaksdfjaskldfj << ALTERAR PARA O TXID DA MAQUINA
-app.get("/consulta-rafael-mac02-lojaFulanoDeTal", async (req, res) => {
-    var pulsosFormatados = converterPixRecebido(valordoPixMaquina2); //<<<<<<ALTERAR PARA O NUMERO DA MAQUINA
 
-    valordoPixMaquina2 = 0; //<<<<<<<<<ALTERAR PARA O NUMERO DA MAQUINA
+app.get("/consulta-maquina-02", async (req, res) => {
+    var pulsosFormatados = converterPixRecebido(valordoPixMaquina2); //<<<<
+
+    valordoPixMaquina2 = 0; //<<<<<
 
     if (pulsosFormatados != "0000") {
         return res.status(200).json({ "retorno": pulsosFormatados });
@@ -104,9 +105,9 @@ app.post("/rota-recebimento", async (req, res) => {
                 console.log("Creditando valor do pix na máquina 1");
             }
 
-            // if (req.body.pix[0].txid == "flaksdfjaskldfj") {
-            //     //valordoPixMaquina3 = req.body.pix[0].valor;
-            //     //console.log("Creditando valor do pix na máquina 3");
+            // if (req.body.pix[0].txid == "txidNumeroDaMaquina02") {
+            //     //valordoPixMaquina2 = req.body.pix[0].valor;
+            //     //console.log("Creditando valor do pix na máquina 2");
             // }
 
             //discord - notificações
